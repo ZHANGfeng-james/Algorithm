@@ -61,8 +61,9 @@ Cookbook——教授各种食谱美食的书，一般**动手操作**，**实践
 
 # 4 参考资料
 
-1. [LeetCode-Go](https://books.halfrost.com/leetcode/)：一份关于 Go 语言的刷题详解
-2. https://leetcode-cn.com/：LeetCode 中国官网
+1. 极客时间：《数据结构与算法之美》
+2. [LeetCode-Go](https://books.halfrost.com/leetcode/)：一份关于 Go 语言的刷题详解
+3. https://leetcode-cn.com/：LeetCode 中国官网
 
 # 5 刷题技巧
 
