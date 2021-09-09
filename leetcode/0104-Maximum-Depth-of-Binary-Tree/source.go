@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	topic = "Leetcode Problem 0101. 对称二叉树\n"
+	topic = "Leetcode Problem 0104. 二叉树的最大深度\n"
 )
 
 func init() {
@@ -18,28 +18,20 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func isSymmetric(root *TreeNode) bool {
-	return loopTest(root.Left, root.Right)
+func maxDepth(root *TreeNode) int {
+	// [1,null,2]
+	if root == nil {
+		return 0
+	}
+	if root.Left == nil && root.Right == nil {
+		return 1
+	}
+	return max(maxDepth(root.Left), maxDepth(root.Right)) + 1
 }
 
-// 封装一个递归判断的函数，必须是同一height
-func loopTest(node1, node2 *TreeNode) bool {
-	// 第一层，判断 node1 和 node2 的 Val
-	if (node1 != nil && node2 == nil) ||
-		(node1 == nil && node2 != nil) {
-		return false
+func max(i, j int) int {
+	if i > j {
+		return i
 	}
-
-	if node1 == nil && node2 == nil {
-		return true
-	}
-
-	if node1.Val != node2.Val {
-		return false
-	}
-
-	// 第二层判断 left and right tree
-	// root 的 left tree's left node 和 right tree's right node
-	// root 的 left tree's right node 和 right tree's left node
-	return loopTest(node1.Left, node2.Right) && loopTest(node1.Right, node2.Left)
+	return j
 }
