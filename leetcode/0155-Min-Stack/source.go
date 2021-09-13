@@ -2,7 +2,6 @@ package leetcode
 
 import (
 	"fmt"
-	"math"
 )
 
 const (
@@ -13,44 +12,53 @@ func init() {
 	fmt.Println(topic)
 }
 
+type Element struct {
+	data int
+	min  int
+}
+
 type MinStack struct {
-	data []int
-	min  []int // 辅助Stack
+	ele []Element // 每个元素都是一个元组：data, min
 }
 
 /** initialize your data structure here. */
 func Constructor() MinStack {
 	stack := MinStack{
-		data: []int{},
-		min:  []int{math.MaxInt64},
+		ele: make([]Element, 0),
 	}
-	fmt.Println(len(stack.data), cap(stack.data))
 	return stack
 }
 
 // Push a element to stack using []int
 func (stack *MinStack) Push(val int) {
-	stack.data = append(stack.data, val)
+	if len(stack.ele) == 0 {
+		stack.ele = append(stack.ele, Element{
+			data: val,
+			min:  val,
+		})
+		return
+	}
 
-	top := stack.min[len(stack.min)-1]
-	// int 类型到底占多少字节？默认是 int32 还是 int64？
-	stack.min = append(stack.min, min(top, val))
+	min := stack.ele[len(stack.ele)-1].min
+	stack.ele = append(stack.ele, Element{
+		data: val,
+		min:  minFunc(val, min),
+	})
 }
 
 func (stack *MinStack) Pop() {
-	stack.data = stack.data[:len(stack.data)-1]
-	stack.min = stack.min[:len(stack.min)-1]
+	stack.ele = stack.ele[:len(stack.ele)-1]
 }
 
 func (stack *MinStack) Top() int {
-	return stack.data[len(stack.data)-1]
+	return stack.ele[len(stack.ele)-1].data
 }
 
 func (stack *MinStack) GetMin() int {
-	return stack.min[len(stack.min)-1]
+	return stack.ele[len(stack.ele)-1].min
 }
 
-func min(x, y int) int {
+func minFunc(x, y int) int {
 	if x < y {
 		return x
 	}

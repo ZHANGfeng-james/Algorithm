@@ -6,7 +6,6 @@ import (
 )
 
 func TestProblem(t *testing.T) {
-
 	stack := Constructor()
 	stack.Push(-2)
 	stack.Push(0)
