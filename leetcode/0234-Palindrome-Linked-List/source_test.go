@@ -6,45 +6,17 @@ import (
 )
 
 type question struct {
-	para
-	ans
-}
-
-type para struct {
-	nums []int
-}
-
-type ans struct {
-	one int
+	para []int
+	ans  bool
 }
 
 func TestProblem(t *testing.T) {
-	questions := []question{
-		{
-			para{[]int{1, 2, 2, 2, 3}},
-			ans{2},
-		},
-		{
-			para{[]int{3, 2, 3}},
-			ans{3},
-		},
-		{
-			para{[]int{2, 2, 1, 1, 1, 2, 2}},
-			ans{2},
-		},
-		{
-			para{[]int{1, 1}},
-			ans{1},
-		},
-		{
-			para{[]int{1}},
-			ans{1},
-		},
-	}
 
-	for _, q := range questions {
-		fmt.Printf("question:%v, got:%d, want:%d\n", q.para, majorityElement(q.para.nums), q.ans)
-	}
+	slice := []int{1, 2, 3, 4, 5}
+	fmt.Println(slice[:1])
+
+	slice = slice[:2]
+	fmt.Println(slice)
 
 	fmt.Printf("\n")
 }

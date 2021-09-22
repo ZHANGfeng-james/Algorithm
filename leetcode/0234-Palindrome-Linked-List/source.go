@@ -18,5 +18,26 @@ type ListNode struct {
 }
 
 func isPalindrome(head *ListNode) bool {
-	return false
+	stack := make([]int, 0)
+	topIndex := -1
+
+	cur := head
+	for cur != nil {
+		stack = append(stack, cur.Val)
+		topIndex++
+		cur = cur.Next
+	}
+
+	for head != nil {
+		// forward and backward
+		if head.Val != stack[topIndex] {
+			return false
+		}
+
+		head = head.Next
+		stack = stack[:topIndex]
+		topIndex--
+	}
+
+	return true
 }
