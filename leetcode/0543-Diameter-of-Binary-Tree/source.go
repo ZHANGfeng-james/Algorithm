@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	topic = "Leetcode Problem 0461. 汉明距离\n"
+	topic = "Leetcode Problem 0543. 二叉树的直径\n"
 )
 
 func init() {
@@ -18,23 +18,32 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func mergeTrees(root1 *TreeNode, root2 *TreeNode) *TreeNode {
-	if root1 == nil && root2 == nil {
-		return nil
+var Max = 0
+
+func diameterOfBinaryTree(root *TreeNode) int {
+	Max = 0
+	depth(root)
+	return Max
+}
+
+func depth(root *TreeNode) int {
+	if root == nil {
+		return 0
 	}
 
-	if root1 != nil && root2 == nil {
-		return root1
+	lDepth := depth(root.Left)
+	rDepth := depth(root.Right)
+
+	if lDepth+rDepth > Max { // Max 就是路径最大值
+		Max = lDepth + rDepth
 	}
 
-	if root1 == nil && root2 != nil {
-		return root2
+	return max(lDepth, rDepth) + 1 // 返回的是 root 节点的深度，比如：叶子节点深度为 1
+}
+
+func max(x, y int) int {
+	if x > y {
+		return x
 	}
-
-	root1.Val += root2.Val
-
-	root1.Left = mergeTrees(root1.Left, root2.Left)
-	root1.Right = mergeTrees(root1.Right, root2.Right)
-
-	return root1
+	return y
 }
