@@ -1,19 +1,11 @@
 package main
 
-import (
-	"fmt"
-	"unsafe"
-)
+import "fmt"
 
 func main() {
-	fmt.Print(isLittleEndian())
-}
 
-func isLittleEndian() bool {
-	var i int32 = 0x01020304
+	arrays := [3]int{}
 
-	u := unsafe.Pointer(&i)
-	pb := (*byte)(u)
-	b := *pb
-	return (b == 0x04)
+	arrays[0] = 1
+	fmt.Println(arrays)
 }
