@@ -5,75 +5,37 @@ import (
 )
 
 const (
-	topic = "Leetcode Problem 0002. 两数相加\n"
+	topic = "Leetcode Problem 0003. 无重复字符的最长子串\n"
 )
 
 func init() {
 	fmt.Println(topic)
 }
 
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
+func lengthOfLongestSubstring(s string) int {
+	start, end := 0, 0
+	len := len(s)
 
-func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
-	// [2,4,3] + [5,6,4]
-	// [0] + [0]
-	// [0] + [1,2,3]
-	// [9,9,9,9,9,9,9] + [9,9,9,9]
-	var head *ListNode = &ListNode{}
-	sentinel := head
+	hashmap := make(map[byte]int)
 
-	flag := false
-	for l1 != nil || l2 != nil {
-		sum, tmp := getSumNode(l1, l2, flag)
-		flag = tmp
-		newNode := &ListNode{
-			Val: sum,
+	result := 0
+	for end != len {
+		ch := s[end]
+		if index, ok := hashmap[ch]; !ok {
+			// hashmap: ch <--> index
+			if result < (end - start + 1) {
+				result = end - start + 1
+			}
+		} else {
+			// start -- index 之间的内容删除
+			for i := start; i <= index; i++ {
+				delete(hashmap, s[i])
+			}
+			start = index + 1
 		}
-		head.Next = newNode
-		head = head.Next
-
-		if l1 != nil {
-			l1 = l1.Next
-		}
-		if l2 != nil {
-			l2 = l2.Next
-		}
+		hashmap[ch] = end
+		end++
 	}
 
-	if flag {
-		// add New ListNode
-		newNode := &ListNode{
-			Val: 1,
-		}
-		head.Next = newNode
-	}
-
-	return sentinel.Next
-}
-
-// getSumNode adds two ListNode, and return sum with a flag
-func getSumNode(l1 *ListNode, l2 *ListNode, flag bool) (sum int, carry bool) {
-	if l1 == nil {
-		sum = l2.Val
-	}
-
-	if l2 == nil {
-		sum = l1.Val
-	}
-
-	if l1 != nil && l2 != nil {
-		sum = l1.Val + l2.Val
-	}
-
-	if flag {
-		sum += 1
-	}
-
-	if sum > 9 {
-		return sum - 10, true
-	}
-	return sum, false
+	return result
 }
